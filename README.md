@@ -1,4 +1,4 @@
-# Project Title
+# Using Angular 2 for Oauth2 Authorization with the Smart on Fhir Sandbox
 
 One Paragraph of project description goes here
 
