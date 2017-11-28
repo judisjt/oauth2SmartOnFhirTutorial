@@ -57,12 +57,13 @@ Add both of those files to the angular assets so when you ng serve a local hoste
 For the launch.html page you will want to include the launch code from the sample authorization page that shows an example
 
 '''
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Simple Auth App - Launch</title>
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        </head>
+
+<!DOCTYPE html>
+<html>
+      <head>
+          <title>Simple Auth App - Launch</title>
+          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+      </head>
     <body>
         Loading...
         <script>
