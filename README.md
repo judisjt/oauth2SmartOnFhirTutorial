@@ -39,27 +39,30 @@ The app launch URI is the first page your website/app goes to and the redirect U
 After you have a registered app create a static javascript launch.html page in your app folder
 
 '''
+
 '''
 
 Create another static html page called afterlaunch.html
 
 '''
+
 '''
 
 Add both of those files to the angular assets so when you ng serve a local hosted webpage angular knows to load those files
 
 '''
+
 '''
 
 For the launch.html page you will want to include the launch code from the sample authorization page that shows an example
 
 '''
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Simple Auth App - Launch</title>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    </head>
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Simple Auth App - Launch</title>
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        </head>
     <body>
         Loading...
         <script>
