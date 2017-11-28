@@ -262,12 +262,185 @@ ng generate component afterlaunch
 ng generate service authorization
 ```
 
-After these two are created we will want to adapt our code that uses jquery requests with javascript in our afterlaunch.html file to making requests using the angular httpclient in typescript.
+After these two are created we will want to adapt our code that uses jquery requests with javascript in our afterlaunch.html file to making requests using the angular httpclient in typescript. Before we change the code and add it to the service component we need to add a couple things to the app.module.ts file
 
 ```
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
+import { AppComponent } from './app.component';
+import { Your_Component } from './afterlaunch/afterlaunch.component';
+import {RouterModule, Routes} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
+import {Your_Service} from './Your_service.service';
+import {FormsModule} from '@angular/forms';
+
+const appRoutes: Routes = [
+  {path: 'afterlaunch', component: Your_Component},
+];
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    AfterLaunchComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    RouterModule.forRoot(
+      appRoutes,
+      {enableTracing: true}
+    )
+  ],
+  providers: [Your_Service],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+We needed to add the import for the httpclient and router module and then create a route connecting the afterlaunch url to our landing component
+
+
+Now here is how you change all of the variables from javascript to typescript and make all of the get and post requests through angular. This is done in our service
+```
+import { Injectable } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {isUndefined} from 'util';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import { Patient } from '../fhir/lib';
+
+@Injectable()
+export class SmartAuthService {
+  state: string;
+  code: string;
+  private sub: any;
+  urlParams: any;
+
+  // Session params
+  tokenUri: string;
+  clientId: string;
+  secret: string;
+  serviceUri: string;
+  redirectUri: string;
+
+  private accessToken: string;
+  private patientId: string;
+
+  constructor(private http: HttpClient) { }
+
+  initialize(route: ActivatedRoute): void {
+    this.sub = route.queryParams.subscribe(params => {
+      this.urlParams = params;
+    });
+
+    // Get URL parameters from auth server
+    this.state = this.getUrlParameter('state');
+    this.code = this.getUrlParameter('code');
+
+    // Load app parameters stored in session
+    const sessionParams = JSON.parse(sessionStorage[this.state]);
+    this.tokenUri = sessionParams.tokenUri;
+    this.clientId = sessionParams.clientId;
+    this.secret = sessionParams.secret;
+    this.serviceUri = sessionParams.serviceUri;
+    this.redirectUri = sessionParams.redirectUri;
+
+    // Prep the token exchange call parameters
+    const urlParams = new HttpParams()
+      .set('code', this.code)
+      .set('grant_type', 'authorization_code')
+      .set('redirect_uri', this.redirectUri)
+      .set('client_id', this.clientId);
+
+    this.http.post(this.tokenUri, urlParams).subscribe(
+      res => {
+        console.log('received data from server');
+        this.accessToken = res['access_token'];
+        this.patientId = res['patient'];
+      }
+    );
+  }
+
+  makeServiceCall(): Observable<any> {
+    if (!this.accessToken) {
+      return Observable.throw('no access token available');
+    }
+
+    return this.http.get<any>(
+      this.serviceUri + '/Patient/' + this.patientId, {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.accessToken)
+      }
+    );
+  }
+
+  getPatient(): Observable<Patient> {
+    if (!this.accessToken) {
+      return Observable.throw('no access token');
+    }
+
+    return this.http.get<Patient>(
+      this.serviceUri + '/Patient/' + this.patientId, {
+        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.accessToken)
+      }
+    );
+  }
+
+  private getUrlParameter(sParam: string): string {
+    if (isUndefined(this.urlParams[sParam])) {
+      console.log('parameter ' + sParam + ' does not exist');
+      return '';
+    }
+    return this.urlParams[sParam];
+  }
+
+}
 ```
 
+After you add this code to the authorization service then you have to make sure that the authorization works by using button press functions in the new component that you just made to make sure you can actually get to the right closed off information in the smart on fhir sandbox. Use this code to do so. This is what goes into the component.ts file.
+
+```
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Your_Service} from '../Your_Service.service';
+
+@Component({
+  selector: 'app-landing',
+  templateUrl: './afterlaunch.component.html',
+  styleUrls: ['./afterlaunch.component.css']
+})
+export class AfterLaunchComponent implements OnInit {
+  ptName: string;
+  property: string;
+  data: string;
+
+  constructor(private route: ActivatedRoute, private YourService: YourService) { }
+
+  ngOnInit() {
+    this.YourService.initialize(this.route);
+  }
+
+  getPatientName() {
+    console.log('getting pt Name');
+    this.YourService.getPatient().subscribe(
+      patient => {
+        this.ptName = this.patient.name[0].given + " " + this.patient.name[0].family;
+      }
+    );
+  }
+```
+
+And here is what you should put in the html part of the component
+
+```
+<h1>In afterlaunch Component:</h1>
+<button (click)="getPatientName()"> Get Patient Name <button>
+<p> {{ptName}}
+
+<p>End of landing Component</p>
+```
+
+After you include this button you should be able to ng serve and then launch the app from the fhir sandbox. After it is launched if you press the button then it should show the patient's name of who you chose to get the data for.
 ## Running the tests
 
 Explain how to run the automated tests for this system
