@@ -94,7 +94,7 @@ For the launch.html page you will want to include the launch code from the sampl
         // To keep things flexible, let's construct the launch URL by taking the base of the 
         // current URL and replace "launch.html" with "index.html".
         var launchUri = window.location.protocol + "//" + window.location.host + window.location.pathname;
-        var redirectUri = launchUri.replace("launch.html","index.html");
+        var redirectUri = launchUri.replace("launch.html","afterlaunch.html");
         
         // FHIR Service Conformance Statement URL
         var conformanceUri = serviceUri + "/metadata"
@@ -157,6 +157,115 @@ For the launch.html page you will want to include the launch code from the sampl
         </script>
     </body>
 </html>
+```
+
+And for the afterlaunch.html page you will want to include this index code provided by the fhir website
+
+```
+<!DOCTYPE html>
+<html>
+  <head>
+     <title>Simple Auth App</title>
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  </head>
+  <body>
+    <script>
+        // get the URL parameters received from the authorization server
+        var state = getUrlParameter("state");  // session key
+        var code = getUrlParameter("code");    // authorization code
+        
+        // load the app parameters stored in the session
+        var params = JSON.parse(sessionStorage[state]);  // load app session
+        var tokenUri = params.tokenUri;
+        var clientId = params.clientId;
+        var secret = params.secret;
+        var serviceUri = params.serviceUri;
+        var redirectUri = params.redirectUri;
+        
+        // Prep the token exchange call parameters
+        var data = {
+            code: code,
+            grant_type: 'authorization_code',
+            redirect_uri: redirectUri
+        };
+        var options;
+        if (!secret) {
+            data['client_id'] = clientId;
+        }
+        options = {
+            url: tokenUri,
+            type: 'POST',
+            data: data
+        };
+        if (secret) {
+            options['headers'] = {'Authorization': 'Basic ' + btoa(clientId + ':' + secret)};
+        }
+        
+        // obtain authorization token from the authorization service using the authorization code
+        $.ajax(options).done(function(res){
+            // should get back the access token and the patient ID
+            var accessToken = res.access_token;
+            var patientId = res.patient;
+                    
+            // and now we can use these to construct standard FHIR
+            // REST calls to obtain patient resources with the
+            // SMART on FHIR-specific authorization header...
+            // Let's, for example, grab the patient resource and
+            // print the patient name on the screen
+            var url = serviceUri + "/Patient/" + patientId;
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "json",
+                headers: {
+                    "Authorization": "Bearer " + accessToken
+                },
+            }).done(function(pt){
+                var name = pt.name[0].given.join(" ") +" "+ pt.name[0].family.join(" ");
+                document.body.innerHTML += "<h3>Patient: " + name + "</h3>";
+            });
+        });
+        
+        // Convenience function for parsing of URL parameters
+        // based on http://www.jquerybyexample.net/2012/06/get-url-parameters-using-jquery.html
+        function getUrlParameter(sParam)
+        {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) 
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    var res = sParameterName[1].replace(/\+/g, '%20');
+                    return decodeURIComponent(res);
+                }
+            }
+        }
+    </script>
+  </body>
+</html>
+```
+
+After you get this code into your angular app I would just make sure it works. Make sure you make the redirect URI, client ID, and scopes the same from the launch html and the launch information that the fhir sandbox needs to authenticate you correctly. This is what I have for my scopes so far. Change them in the html page and the launch information if needed.
+
+```
+Client Type: Public Client
+Client Id: Your client Id
+App Launch URI: http://localhost:4200/launch.html
+App Redirect URI: http://localhost:4200/afterlaunch
+```
+
+The next step would be to create an angular service and component so you can start actually using angular. Write these two commands to create a component and a service in angular.
+
+```
+ng generate component afterlaunch
+ng generate service authorization
+```
+
+After these two are created we will want to adapt our code that uses jquery requests with javascript in our afterlaunch.html file to making requests using the angular httpclient in typescript.
+
+```
+
 ```
 
 ## Running the tests
