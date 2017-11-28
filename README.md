@@ -1,36 +1,46 @@
 # Using Angular 2 for Oauth2 Authorization with the Smart on Fhir Sandbox
 
-One Paragraph of project description goes here
+I just learned how to create a website that makes authorized get requests to the smart on fhir server and I wanted to make a tutorial on how to do that in Angular 2. 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+The main thing that you need to be able to start this project would be to have NPM installed and then to have the angular-cli installed.
+You might want to look up what Oauth2 authorization is, but that would just be for understanding more than anything.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+To install NPM go to https://www.npmjs.com/get-npm and it is a free javascript package manager that helps organize all of the packages that you will end up downloading. It it pretty easy to use and if you don't know how I would look up a quick tutorial on that as well.
 
-```
-Give examples
-```
 
 ### Installing
 
 A step by step series of examples that tell you have to get a development env running
 
-Say what the step will be
+This is after you have npm downloaded and installed. You have to install the Angular-cli through npm. Write this in the command prompt.
 
 ```
-Give the example
+npm install angular-cli
 ```
 
-And repeat
+After Angular is installed you will want to create a new angular project. Write this in the command prompt as well.
 
 ```
-until finished
+ng new PROJECT_NAME
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Once you have an angular project up and running you should register yourself with the fhir sandbox DSTU2 server so you can test apps
+
+After you login to the smart on fhir sandbox go to  registered apps and click on register manually
+
+'''
+The app launch URI is the first page your website/app goes to and the redirect URI is the landing page after fhir authenticates the user
+'''
+
+After you have a registered app create a static javascript launch.html page in your app folder
+
+'''
+go  to 
+'''
 
 ## Running the tests
 
