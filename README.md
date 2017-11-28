@@ -32,32 +32,30 @@ Once you have an angular project up and running you should register yourself wit
 
 After you login to the smart on fhir sandbox go to registered apps and click on register manually
 
-'''
+```
 The app launch URI is the first page your website/app goes to and the redirect URI is the landing page after fhir authenticates the user
-'''
+```
 
 After you have a registered app create a static javascript launch.html page in your app folder
 
-'''
+```
 
-'''
-
+```
 Create another static html page called afterlaunch.html
 
-'''
+```
 
-'''
+```
 
 Add both of those files to the angular assets so when you ng serve a local hosted webpage angular knows to load those files
 
-'''
+```
 
-'''
+```
 
 For the launch.html page you will want to include the launch code from the sample authorization page that shows an example
 
-'''
-
+```
 <!DOCTYPE html>
 <html>
       <head>
@@ -159,7 +157,7 @@ For the launch.html page you will want to include the launch code from the sampl
         </script>
     </body>
 </html>
-'''
+```
 
 ## Running the tests
 
