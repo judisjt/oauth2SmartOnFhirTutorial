@@ -451,10 +451,10 @@ And here is what you should put in the html part of the component
 
 ```
 <h1>In afterlaunch Component:</h1>
-<button (click)="getPatientName()"> Get Patient Name <button>
-<p> {{ptName}}
+<button (click)="getPatientName()"> Get Patient Name </button>
+  <p> {{ptName}} </p>
 
-<p>End of landing Component</p>
+  <p>End of landing Component</p>
 ```
 
 After you include this button you should be able to ng serve and then launch the app from the fhir sandbox. After it is launched if you press the button then it should show the patient's name of who you chose to get the data for.
