@@ -258,7 +258,7 @@ After you get this code into your angular app I would just make sure it works. M
 Client Type: Public Client
 Client Id: Your client Id
 App Launch URI: http://localhost:4200/launch.html
-App Redirect URI: http://localhost:4200/afterlaunch
+App Redirect URI: http://localhost:4200/afterlaunch.html
 Scopes: patient/*.read launch
 ```
 
