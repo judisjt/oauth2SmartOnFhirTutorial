@@ -5,7 +5,7 @@ I just learned how to create a website that makes authorized get requests to the
 ## Getting Started
 
 The main thing that you need to be able to start this project would be to have NPM installed and then to have the angular-cli installed.
-You might want to look up what Oauth2 authorization is, but that would just be for understanding more than anything.
+You might want to look up what Oauth2 authorization is, but that would just be for understanding more than anything. Also, you will wanta good IDE to work with. I use and recommend jetbrains webstorm, but any IDE you like will do.
 
 ### Prerequisites
 
@@ -469,5 +469,5 @@ After you include this button you should be able to ng serve and then launch the
 
 ## Authors
 
-* **Jason Judis, Dr. Kevin Dufendach**
+* **Jason Judis**
 
