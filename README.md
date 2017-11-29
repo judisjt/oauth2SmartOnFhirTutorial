@@ -14,7 +14,6 @@ To install NPM go to https://www.npmjs.com/get-npm and it is a free javascript p
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
 
 This is after you have npm downloaded and installed. You have to install the Angular-cli through npm. Write this in the command prompt.
 
