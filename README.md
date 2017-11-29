@@ -278,20 +278,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { AfterlaunchComponent } from './afterlaunch/afterlaunch.component';
+import { AfterLaunchComponent } from './afterlaunch/afterlaunch.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 
 const appRoutes: Routes = [
-  {path: 'afterlaunch', component: AfterlaunchComponent},
+  {path: 'afterlaunch', component: AfterLaunchComponent},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    AfterlaunchComponent
-  ],
+    AfterLaunchComponent
+  ]
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -301,7 +301,7 @@ const appRoutes: Routes = [
       {enableTracing: true}
     )
   ],
-  providers: [AfterlaunchComponent],
+  providers: [AfterLaunchComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
@@ -376,25 +376,12 @@ export class SmartAuthService {
       }
     );
   }
-
-  makeServiceCall(): Observable<any> {
-    if (!this.accessToken) {
-      return Observable.throw('no access token available');
-    }
-
-    return this.http.get<any>(
-      this.serviceUri + '/Patient/' + this.patientId, {
-        headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.accessToken)
-      }
-    );
-  }
-
-  getPatient(): Observable<Patient> {
+  getPatient() {
     if (!this.accessToken) {
       return Observable.throw('no access token');
     }
 
-    return this.http.get<Patient>(
+    return this.http.get(
       this.serviceUri + '/Patient/' + this.patientId, {
         headers: new HttpHeaders().set('Authorization', 'Bearer ' + this.accessToken)
       }
@@ -419,32 +406,33 @@ This is what goes into the component.ts file.
 ```
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Your_Service} from '../Your_Service.service';
+import {SmartAuthService} from '../authorization.service';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './afterlaunch.component.html',
-  styleUrls: ['./afterlaunch.component.css']
+  styleUrls: ['./afterlaunch.component.css'],
+  providers: [SmartAuthService]
 })
 export class AfterLaunchComponent implements OnInit {
   ptName: string;
-  property: string;
-  data: string;
 
-  constructor(private route: ActivatedRoute, private YourService: YourService) { }
+  constructor(private route: ActivatedRoute, private authService: SmartAuthService) {
+  }
 
   ngOnInit() {
-    this.YourService.initialize(this.route);
+    this.authService.initialize(this.route);
   }
 
   getPatientName() {
-    console.log('getting pt Name');
-    this.YourService.getPatient().subscribe(
-      patient => {
-        this.ptName = this.patient.name[0].given + " " + this.patient.name[0].family;
-      }
-    );
+    this.authService.getPatient().subscribe(data => {
+      // get pt name and store it in a variable
+      this.ptName = data['name'][0].given.join(' ') + ' ' + data['name'][0].family.join(' ');
+    });
   }
+}
+
+
 ```
 
 And here is what you should put in the html part of the component
@@ -455,9 +443,33 @@ And here is what you should put in the html part of the component
   <p> {{ptName}} </p>
 
   <p>End of landing Component</p>
+
 ```
 
 After you include this button you should be able to ng serve and then launch the app from the fhir sandbox. After it is launched if you press the button then it should show the patient's name of who you chose to get the data for.
+
+Also, there might be an error in the spec file for the authorzation service. If it needs to be fixed replace the file with this code.
+
+
+```
+import { TestBed, inject } from '@angular/core/testing';
+
+import { SmartAuthService } from './authorization.service';
+
+describe('AuthorizationService', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [SmartAuthService]
+    });
+  });
+
+  it('should be created', inject([SmartAuthService], (service: SmartAuthService) => {
+    expect(service).toBeTruthy();
+  }));
+});
+
+```
+Lastly, if there is an error about the afterlaunch component not being an exported file, then you should just replace the afterlaunch name with the red line under it with AfterLaunchComponent and do the same for all of the words that are covered in red. 
 
 
 ## Built With
