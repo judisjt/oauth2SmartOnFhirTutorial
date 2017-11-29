@@ -40,17 +40,17 @@ The app launch URI is the first page your website/app goes to and the redirect U
 ```
 The launch URI should be localhost:4200/launch.html and the redirect URI should be localhost:4200/afterlaunch.html
 
-After you have a registered app you should create a static launch.html page in your app folder and then create another static html page called afterlaunch.html
+After you have a registered app you should create a static launch.html page in your source folder
 
 ```
-add how to add static html files to assets
+After you create the static html page in the source folder, then you should go to the angular cli json file and add "launch.html" in the assets bracket
 
 ```
 
 Add both of those files to the angular assets so when you ng serve a local hosted webpage angular knows to load those files
 
 ```
-add how to add static html files to assets
+After you create the static html page in the source folder, then you should go to the angular cli json file and add "afterlaunch.html" in the assets bracket
 
 ```
 
@@ -306,8 +306,11 @@ export class AppModule { }
 ```
 We needed to add the import for the httpclient and router module and then create a route connecting the afterlaunch url to our landing component. Make sure the components and services matches the names you made them.
 
+One last thing we need to do is to add the router outlet tag to the app.component.html file. We need to do this so that when we route our AfterLaunchComponent to the correct url that the right information will show to the user through the app component. 
 
-Now here is how you change all of the variables from javascript to typescript and make all of the get and post requests through angular. This is done in our service
+
+Now here is how you change all of the variables from javascript to typescript and make all of the get and post requests through angular. 
+Include this code in the new service that was just created.
 ```
 import { Injectable } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
@@ -403,7 +406,9 @@ export class SmartAuthService {
 }
 ```
 
-After you add this code to the authorization service then you have to make sure that the authorization works by using button press functions in the new component that you just made to make sure you can actually get to the right closed off information in the smart on fhir sandbox. Use this code to do so. This is what goes into the component.ts file.
+After you add this code to the authorization service then you have to make sure that the authorization works by using button press functions in the new component that you just made to make sure you can actually get to the right closed off information in the smart on fhir sandbox. Use this code to do so. 
+
+This is what goes into the component.ts file.
 
 ```
 import {Component, OnInit} from '@angular/core';
@@ -447,50 +452,14 @@ And here is what you should put in the html part of the component
 ```
 
 After you include this button you should be able to ng serve and then launch the app from the fhir sandbox. After it is launched if you press the button then it should show the patient's name of who you chose to get the data for.
-## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
 * [Angular](https://angular.io/) - The web framework used
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Jason Judis, Dr. Kevin Dufendach** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Jason Judis, Dr. Kevin Dufendach**
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
