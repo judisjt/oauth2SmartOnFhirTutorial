@@ -15,7 +15,7 @@ To install NPM go to https://www.npmjs.com/get-npm and it is a free javascript p
 ### Installing
 
 
-This is after you have npm downloaded and installed. You have to install the Angular-cli through npm. Write this in the command prompt.
+This is after you have npm downloaded and installed. You have to install the Angular-cli through npm. Write this in the command prompt after you have the angular cli installed through npm.
 
 ```
 npm install angular-cli
@@ -27,18 +27,22 @@ After Angular is installed you will want to create a new angular project. Write 
 ng new PROJECT_NAME
 ```
 
-Once you have an angular project up and running you should register yourself with the fhir sandbox DSTU2 server so you can test apps
+Once you have an angular project up and running you should register yourself with the fhir sandbox DSTU2 server so you can test apps. Go here to make your account and login to the fhir sandbox that uses oauth2 and has the patient data we need to access.
+
+'''
+https://sandbox.smarthealthit.org/#/start
+'''
 
 After you login to the smart on fhir sandbox go to registered apps and click on register manually
 
 ```
 The app launch URI is the first page your website/app goes to and the redirect URI is the landing page after fhir authenticates the user
 ```
+The launch URI should be localhost:4200/launch.html and the redirect URI should be localhost:4200/afterlaunch.html
 
 After you have a registered app create a static javascript launch.html page in your app folder
 
 ```
-
 ```
 Create another static html page called afterlaunch.html
 
@@ -49,10 +53,13 @@ Create another static html page called afterlaunch.html
 Add both of those files to the angular assets so when you ng serve a local hosted webpage angular knows to load those files
 
 ```
+add how to add static html files to assets
 
 ```
 
 For the launch.html page you will want to include the launch code from the sample authorization page that shows an example
+
+Make sure to change the client id and the redirect uri to what you need them to be for this code to work
 
 ```
 <!DOCTYPE html>
@@ -252,6 +259,7 @@ Client Type: Public Client
 Client Id: Your client Id
 App Launch URI: http://localhost:4200/launch.html
 App Redirect URI: http://localhost:4200/afterlaunch
+Scopes: patient/*.read launch
 ```
 
 The next step would be to create an angular service and component so you can start actually using angular. Write these two commands to create a component and a service in angular.
@@ -261,7 +269,9 @@ ng generate component afterlaunch
 ng generate service authorization
 ```
 
-After these two are created we will want to adapt our code that uses jquery requests with javascript in our afterlaunch.html file to making requests using the angular httpclient in typescript. Before we change the code and add it to the service component we need to add a couple things to the app.module.ts file
+After these two are created we will want to adapt our code that uses jquery requests with javascript in our afterlaunch.html file to making requests using the angular httpclient in typescript. 
+
+Before we change the code and add it to the service component we need to add a couple things to the app.module.ts file
 
 ```
 import { BrowserModule } from '@angular/platform-browser';
@@ -297,7 +307,7 @@ const appRoutes: Routes = [
 })
 export class AppModule { }
 ```
-We needed to add the import for the httpclient and router module and then create a route connecting the afterlaunch url to our landing component
+We needed to add the import for the httpclient and router module and then create a route connecting the afterlaunch url to our landing component. Make sure the components and services matches the names you made them.
 
 
 Now here is how you change all of the variables from javascript to typescript and make all of the get and post requests through angular. This is done in our service
@@ -466,9 +476,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Angular](https://angular.io/) - The web framework used
 
 ## Contributing
 
@@ -480,7 +488,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Jason Judis, Dr. Kevin Dufendach** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
@@ -489,7 +497,3 @@ See also the list of [contributors](https://github.com/your/project/contributors
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
