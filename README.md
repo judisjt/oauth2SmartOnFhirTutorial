@@ -33,7 +33,7 @@ Once you have an angular project up and running you should register yourself wit
 https://sandbox.smarthealthit.org/#/start
 ```
 
-After you login to the smart on fhir sandbox go to registered apps and click on register manually
+After you login to the smart on fhir sandbox and click on the DSTU2 server, then go to registered apps and click on register manually. 
 
 ```
 The app launch URI is the first page your website/app goes to and 
