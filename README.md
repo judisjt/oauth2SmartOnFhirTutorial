@@ -308,6 +308,11 @@ We needed to add the import for the httpclient and router module and then create
 
 One last thing we need to do is to add the router outlet tag to the app.component.html file. We need to do this so that when we route our AfterLaunchComponent to the correct url that the right information will show to the user through the app component. 
 
+Delete everything that was in the app component html file and replace it with this one tag. All of the routes should go up on this page when the url is correct for the route
+
+```
+<router-outlet></router-outlet>
+```
 
 Now here is how you change all of the variables from javascript to typescript and make all of the get and post requests through angular. 
 Include this code in the new service that was just created.
