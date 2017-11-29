@@ -446,7 +446,7 @@ And here is what you should put in the html part of the component
 
 ```
 
-After you include this button you should be able to ng serve and then launch the app from the fhir sandbox. Make sure you change and save the redirect URI in the smart on fhir sandbox to end in afterlaunch without the .html at the end so it knows to go after the url of the component and not the static html page. After it is launched if you press the button then it should show the patient's name of who you chose to get the data for.
+After you include this button you should be able to ng serve and then launch the app from the fhir sandbox. Make sure you change and save the redirect URI in the smart on fhir sandbox to end in afterlaunch without the .html at the end so it knows to go after the url of the component and not the static html page. Don't forget to do this in the launch.html also with the replace function. If the replace function uses the wrong name as a replacement you will get an invalid_grant error. After it is launched if you press the button then it should show the patient's name of who you chose to get the data for.
 
 Also, there might be an error in the spec file for the authorzation service. If it needs to be fixed replace the file with this code.
 
