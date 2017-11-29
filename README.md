@@ -36,21 +36,24 @@ https://sandbox.smarthealthit.org/#/start
 After you login to the smart on fhir sandbox go to registered apps and click on register manually
 
 ```
-The app launch URI is the first page your website/app goes to and the redirect URI is the landing page after fhir authenticates the user
+The app launch URI is the first page your website/app goes to and 
+the redirect URI is the landing page after fhir authenticates the user
 ```
 The launch URI should be localhost:4200/launch.html and the redirect URI should be localhost:4200/afterlaunch.html
 
 After you have a registered app you should create a static launch.html page in your source folder
 
 ```
-After you create the static html page in the source folder, then you should go to the angular cli json file and add "launch.html" in the assets bracket
+After you create the static html page in the source folder, then you should go to the angular cli json file and 
+add "launch.html" in the assets bracket
 
 ```
 
 Add both of those files to the angular assets so when you ng serve a local hosted webpage angular knows to load those files
 
 ```
-After you create the static html page in the source folder, then you should go to the angular cli json file and add "afterlaunch.html" in the assets bracket
+After you create the static html page in the source folder, then you should go to the angular cli json file 
+and add "afterlaunch.html" in the assets bracket
 
 ```
 
