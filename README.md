@@ -29,9 +29,9 @@ ng new PROJECT_NAME
 
 Once you have an angular project up and running you should register yourself with the fhir sandbox DSTU2 server so you can test apps. Go here to make your account and login to the fhir sandbox that uses oauth2 and has the patient data we need to access.
 
-'''
+```
 https://sandbox.smarthealthit.org/#/start
-'''
+```
 
 After you login to the smart on fhir sandbox go to registered apps and click on register manually
 
@@ -40,14 +40,10 @@ The app launch URI is the first page your website/app goes to and the redirect U
 ```
 The launch URI should be localhost:4200/launch.html and the redirect URI should be localhost:4200/afterlaunch.html
 
-After you have a registered app create a static javascript launch.html page in your app folder
+After you have a registered app you should create a static launch.html page in your app folder and then create another static html page called afterlaunch.html
 
 ```
-```
-Create another static html page called afterlaunch.html
-
-```
-Add
+add how to add static html files to assets
 
 ```
 
