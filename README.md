@@ -271,7 +271,7 @@ ng generate service authorization
 
 After these two are created we will want to adapt our code that uses jquery requests with javascript in our afterlaunch.html file to making requests using the angular httpclient in typescript. 
 
-Before we change the code and add it to the service component we need to add a couple things to the app.module.ts file
+Before we change the code and add it to the service component we need to add a couple things to the app.module.ts file in the app folder
 
 ```
 import { BrowserModule } from '@angular/platform-browser';
