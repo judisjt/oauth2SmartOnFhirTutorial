@@ -278,20 +278,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { Your_Component } from './afterlaunch/afterlaunch.component';
+import { AfterlaunchComponent } from './afterlaunch/afterlaunch.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
-import {Your_Service} from './Your_service.service';
 import {FormsModule} from '@angular/forms';
 
 const appRoutes: Routes = [
-  {path: 'afterlaunch', component: Your_Component},
+  {path: 'afterlaunch', component: AfterlaunchComponent},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    AfterLaunchComponent
+    AfterlaunchComponent
   ],
   imports: [
     BrowserModule,
@@ -302,7 +301,7 @@ const appRoutes: Routes = [
       {enableTracing: true}
     )
   ],
-  providers: [Your_Service],
+  providers: [AfterlaunchComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
