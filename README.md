@@ -47,6 +47,7 @@ After you have a registered app create a static javascript launch.html page in y
 Create another static html page called afterlaunch.html
 
 ```
+Add
 
 ```
 
