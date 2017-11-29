@@ -324,7 +324,6 @@ import {ActivatedRoute} from '@angular/router';
 import {isUndefined} from 'util';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import { Patient } from '../fhir/lib';
 
 @Injectable()
 export class SmartAuthService {
