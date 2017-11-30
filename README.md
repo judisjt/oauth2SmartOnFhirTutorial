@@ -262,6 +262,8 @@ App Redirect URI: http://localhost:4200/afterlaunch.html
 Scopes: patient/*.read launch
 ```
 
+To make sure it works run ng serve in the command prompt and then after angular loads the local hosted webpage then you should go back to the fhir sandbox and press the launch button when you have your app selected. Pick a patient and then it should run you through the authentication page and return you to the original page you are on with the patient name on your webpage.
+
 The next step would be to create an angular service and component so you can start actually using angular. Write these two commands to create a component and a service in angular.
 
 ```
